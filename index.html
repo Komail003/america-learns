@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Calculator</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+    body {
+      background-color: #c5e4e7;
+
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    button,
+    input,
+    td {
+      font-family: 'Oswald', sans-serif !important;
+    }
+
+    p,
+    span,
+    li,
+    th {
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    .container {
+      max-width: 90%;
+      margin: 0 auto;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .logo img {
+      mix-blend-mode: multiply;
+      width: 450px;
+    }
+
+    #result {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    .instructions {
+      display: flexbox;
+      width: 100%;
+      padding: 12px;
+    }
+
+    .Result {
+      display: flex;
+      width: 100%;
+      background-color: #00474a;
+      color: #28c2ae;
+      border-radius: 20px;
+      padding: 12px;
+      align-content: space-between;
+    }
+
+    .btn-Calculate {
+      background-color: #28c2ae;
+
+    }
+
+    tr {
+      margin-top: 10px !important;
+    }
+
+    .form-control {
+      height: 50px;
+      font-size: large;
+    }
+
+    li {
+      color: gray;
+    }
+
+    .error {
+      font-size: medium;
+    }
+
+    .d-lg {
+      display: flex;
+      background-color: white;
+      border-radius: 20px;
+      padding: 12px;
+    }
+
+    @media screen and (max-width: 768px) {
+      /* body {
+        background-color: lightgreen;
+      } */
+      .d-lg {
+      display: block;
+      background-color: white;
+      border-radius: 20px;
+      padding: 12px;
+    }
+    .logo img {
+      
+      width:250px;
+    }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="logo">
+      <img src="./logo.png" alt="Logo">
+    </div>
+    <div class="d-lg">
+      <div class="instructions ">
+        <p class="text-center oswald">
+        <p>
+        <h6>Instructions:</h6> Please enter the number of programs in the yellow cell to calculate costs.
+        </p>
+        <h3 class="m-0 p-0">Reminder: </h3>
+        <li>There are never any additional fees you need to budget for.</li>
+        <li>No data storage/archival fees.</li>
+        <li>No support fees.</li>
+        <li>No customization fees.</li>
+        <li>No maintenance fees.</li>
+        <li>Free storage of timesheet and financial report records from OnCorps, including
+          migration support.</li>
+
+        </p>
+
+
+        <div class="input-group">
+          <input type="number" id="inputNumber" class="form-control "
+            placeholder="Please enter the number of programs to calculate costs." aria-label="Enter a number"
+            aria-describedby="basic-addon2">
+          <div class="input-group-append">
+            <button class="btn btn-Calculate" onclick="calculate()"><b>Calculate</b></button>
+          </div>
+        </div>
+        <h6 class="text-danger m-0 p-0 text-right d-none error" id="error">Please enter a number greater than 1 and
+          ensure the field is not left empty.</h6>
+      </div>
+      <div class="Result">
+        <!-- <div id="result" class="text-center"></div> -->
+        <div class="rounded-3">
+          <div class="card-body">
+            <div style="display: flex; font-size: 13px;">
+              <div class="w-100">
+                <table>
+                  <tr class="">
+                    <td class="w-50"></td>
+                    <td class="">Total with Document Signing &nbsp;
+                      (500 signed docs per program)
+                    </td>
+                    <td class="">Total without Document Signing
+                    </td>
+                  </tr>
+                  <tr class="">
+                    <th class="w-50">MCSC's Discounted Pricing Per Program</th>
+                    <td class="text-right" id="c1">0</td>
+                    <td class="text-right" id="d1">0</td>
+                  </tr>
+                  <tr class="">
+                    <th class="w-50">MCSC's Discounted Total</th>
+                    <td class="text-right" id="c2">0</td>
+                    <td class="text-right" id="d2">0</td>
+                  </tr>
+                  <tr class="">
+                    <th class="w-50">Regular Pricing (Including Professional Development Workshops)</th>
+                    <td class="text-right" id="c3">0</td>
+                    <td class="text-right" id="d3">0</td>
+                  </tr>
+                  <tr class="">
+                    <th class="w-50">Total Discounts (Including Professional Development Workshops)</th>
+                    <td class="text-right" id="c4">0</td>
+                    <td class="text-right" id="d4">0</td>
+                  </tr>
+                  <tr class="">
+                    <th class="w-50">Regular Pricing (Excluding Professional Development Workshops)</th>
+                    <td class="text-right" id="c5">0</td>
+                    <td class="text-right" id="d5">0</td>
+                  </tr>
+                  <tr class="">
+                    <th class="w-50">Total Discounts (Excluding Professional Development Workshops)</th>
+                    <td class="text-right" id="c6">0</td>
+                    <td class="text-right" id="d6">0</td>
+                  </tr>
+                </table>
+              </div>
+              <!-- <div class="w-50 ">2</div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <script>
+    function calculate() {
+      // alert(123);
+      let inputNumber = document.getElementById('inputNumber').value;
+      if (inputNumber <= 0) {
+        // alert(1);
+        document.getElementById("error").classList.remove("d-none");
+        return false;
+      }
+      document.getElementById("error").classList.add("d-none");
+      let mscsgprs = 3750;
+      let mscsfrm = 3750;
+      let mscstfc = inputNumber * 2625;
+      // let mscsacp;
+      let mscsut5 = 250 * inputNumber;
+      let mscsopdm = 0;
+      let mscsopdp = 0;
+      let rrgprs = 9800;
+      let rrfrm = 9800;
+      let rrtfc = inputNumber * 3500;
+      // let rracp;
+      let rrut5 = 1000 * inputNumber;
+      let rropdm = 39 * 1000 * 6;
+      let rropdp = 39 * 60 * 6;
+
+
+      let tdsmcsSum = mscsgprs + mscsfrm + mscstfc + mscsut5 + mscsopdm + mscsopdp;
+      let tdsmcsppp = tdsmcsSum / inputNumber;
+      let tdsrrSum = rrgprs + rrfrm + rrtfc + rrut5 + rropdm + rropdp;
+      let tdsrrppp = tdsrrSum / inputNumber;
+      let tdsTotalDiscount = tdsrrSum - tdsmcsSum;
+      let tdsrrexl = rrut5 + rrtfc + rrfrm + rrgprs;
+      let tdsDiscountexl = tdsrrexl - tdsmcsSum;
+      document.getElementById('c1').innerHTML = tdsmcsppp.toFixed(2);
+      document.getElementById('c2').innerHTML = tdsmcsSum;
+      document.getElementById('c3').innerHTML = tdsrrSum;
+      document.getElementById('c4').innerHTML = tdsTotalDiscount;
+      document.getElementById('c5').innerHTML = tdsrrexl;
+      document.getElementById('c6').innerHTML = tdsDiscountexl;
+      document.getElementById('d1').innerHTML = ((tdsmcsSum - mscsut5) / inputNumber).toFixed(2);
+      document.getElementById('d2').innerHTML = tdsmcsSum - mscsut5;
+      document.getElementById('d3').innerHTML = rrgprs + rrfrm + rrtfc + rropdm + rropdp;
+      document.getElementById('d4').innerHTML = (rrgprs + rrfrm + rrtfc + rropdm + rropdp) - (tdsmcsSum - mscsut5);
+      document.getElementById('d5').innerHTML = rrgprs + rrfrm + rrtfc;
+      document.getElementById('d6').innerHTML = (rrgprs + rrfrm + rrtfc) - (tdsmcsSum - mscsut5);
+    }
+  </script>
+
+</body>
+
+</html>
